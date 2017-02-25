@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.topnews.android.view.NoScrollViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <RadioGroup
+        android:id="@+id/rg_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/btn_home"
+            style="@style/Bottom_Tab_Style"
+            android:text="首页"
+            android:drawableTop="@drawable/tab_home"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/btn_talking"
+            style="@style/Bottom_Tab_Style"
+            android:text="直播"
+            android:drawableTop="@drawable/tab_talking"/>
+
+        <RadioButton
+            android:id="@+id/btn_topic"
+            style="@style/Bottom_Tab_Style"
+            android:text="话题"
+            android:drawableTop="@drawable/tab_topic"/>
+
+        <RadioButton
+            android:id="@+id/btn_setting"
+            style="@style/Bottom_Tab_Style"
+            android:text="设置"
+            android:drawableTop="@drawable/tab_setting"/>
+    </RadioGroup>
+
+</LinearLayout>
