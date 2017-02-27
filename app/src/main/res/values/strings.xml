@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">东方新闻</string>
+
+    <string-array name="tab_names">
+        <item>头条</item>
+        <item>要闻</item>
+        <item>娱乐</item>
+        <item>体育</item>
+        <item>财经</item>
+        <item>科技</item>
+        <item>游戏</item>
+    </string-array>
+
 </resources>
