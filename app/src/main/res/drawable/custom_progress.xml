@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- 正向旋转的圆,速度快 -->
+    <item>
+        <rotate
+            android:drawable="@drawable/spinner_inner"
+            android:fromDegrees="0"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toDegrees="720" />
+    </item>
+
+    <!-- 逆向旋转的圆,速度慢 -->
+    <item>
+        <rotate
+            android:drawable="@drawable/spinner_outer"
+            android:fromDegrees="360"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toDegrees="0" />
+    </item>
+
+</layer-list>

@@ -2,17 +2,20 @@ package com.topnews.android.pager;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.view.PagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.topnews.android.R;
 import com.topnews.android.fragment.BaseFragment;
 import com.topnews.android.fragment.FragmentFactory;
+import com.topnews.android.fragment.TopFragment;
 import com.topnews.android.utils.UIUtils;
+import com.topnews.android.view.LoadingPage;
 import com.topnews.android.view.ScaleTransitionPagerTitleView;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -39,6 +42,12 @@ public class HomePager extends BasePager {
     private ViewPager vp_detail;
     private List<String> tabNames;
 
+    private FragmentManager fragmentManager;
+
+    public HomePager(FragmentManager fragmentManager){
+        this.fragmentManager=fragmentManager;
+    }
+
     @Override
     public View initView() {
 
@@ -47,7 +56,7 @@ public class HomePager extends BasePager {
 
         tabNames = Arrays.asList(UIUtils.getStringArray(R.array.tab_names));
 
-        MyPagerAdapter adapter=new MyPagerAdapter(tabNames);
+        MyFragmentAdapter adapter=new MyFragmentAdapter(fragmentManager);
         vp_detail.setAdapter(adapter);
 
         MagicIndicator magicIndicator = (MagicIndicator) view.findViewById(R.id.magic_indicator);
@@ -87,8 +96,27 @@ public class HomePager extends BasePager {
                 return indicator;
             }
         });
+
         magicIndicator.setNavigator(commonNavigator);
         ViewPagerHelper.bind(magicIndicator, vp_detail);
+
+        vp_detail.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                BaseFragment fragment=FragmentFactory.creatFragment(position);
+                fragment.initData();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         return view;
     }
@@ -98,41 +126,29 @@ public class HomePager extends BasePager {
 
     }
 
-    public class MyPagerAdapter extends PagerAdapter {
-        private List<String> mDataList;
+    public class MyFragmentAdapter extends FragmentPagerAdapter{
 
-        public MyPagerAdapter(List<String> dataList) {
-            mDataList = dataList;
+        public MyFragmentAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+
+            BaseFragment fragment=FragmentFactory.creatFragment(position);
+
+            return fragment;
         }
 
         @Override
         public int getCount() {
-            return mDataList == null ? 0 : mDataList.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-
-            BaseFragment fragment=FragmentFactory.creatFragment(position);
-            View view=fragment.initView();
-
-            container.addView(view);
-            return view;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
+            return tabNames == null ? 0 : tabNames.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mDataList.get(position);
+            return tabNames.get(position);
         }
+
     }
 }

@@ -41,12 +41,13 @@ public class HomeActivity extends AppCompatActivity {
         mPagers=new ArrayList<BasePager>();
 
         //添加四个标签页
-        mPagers.add(new HomePager());
+        mPagers.add(new HomePager(getSupportFragmentManager()));
         mPagers.add(new TalkingPager());
         mPagers.add(new TopicPager());
         mPagers.add(new SettingPager());
 
         vp_content.setAdapter(new ContentAdapter());
+        vp_content.setOffscreenPageLimit(3);
 
         rg_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -93,7 +94,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        mPagers.get(0).initData();       //手动加载第一页数据
+        //mPagers.get(0).initData();       //手动加载第一页数据
     }
 
     class ContentAdapter extends PagerAdapter{
