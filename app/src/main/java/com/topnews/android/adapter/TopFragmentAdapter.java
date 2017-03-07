@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.topnews.android.R;
+import com.topnews.android.gson.TopInfo;
 
 import java.util.List;
 
@@ -34,9 +35,9 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private static final int TYPE_FOOTER = 1;           //底部FootView
 
-    private List<String> mDatas;
+    private List<TopInfo> mDatas;
 
-    public TopFragmentAdapter(List<String> mDatas){
+    public TopFragmentAdapter(List<TopInfo> mDatas){
 
         this.mDatas=mDatas;
     }
@@ -85,7 +86,7 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (holder instanceof ItemViewHolder){
 
             ((ItemViewHolder) holder).iv_icon.setImageResource(R.drawable.icon);
-            ((ItemViewHolder) holder).tv_text.setText(mDatas.get(position));
+            ((ItemViewHolder) holder).tv_text.setText(mDatas.get(position).title);
 
             holder.itemView.setTag(position);
         }else if (holder instanceof FootViewHolder){

@@ -40,7 +40,7 @@ public abstract class BaseProtocol <T>{
     /**
      * 从服务器获取数据
      */
-    private String getDataFromServer(int index){
+    public String getDataFromServer(int index){
 
         //http://v.juhe.cn/weixin/query?pno=3&key=24356ec566122b022445333bc04aa489
         String url="http://v.juhe.cn/weixin/query?pno="+index+"&key=24356ec566122b022445333bc04aa489";

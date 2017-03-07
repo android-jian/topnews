@@ -4,9 +4,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.topnews.android.R;
 import com.topnews.android.adapter.TopFragmentAdapter;
+import com.topnews.android.gson.TopInfo;
+import com.topnews.android.protocol.TopProtocol;
 import com.topnews.android.utils.UIUtils;
 import com.topnews.android.view.LoadingPage;
 import com.topnews.android.view.RecycleViewDivider;
@@ -24,12 +27,14 @@ import static com.topnews.android.utils.UIUtils.runOnUiThread;
 
 public class TopFragment extends BaseFragment {
 
-    private List<String> mDatas;
+    private List<TopInfo> mDatas;
     private SwipeRefreshLayout swipe_refresh;
     private RecyclerView recycler_view;
     private LinearLayoutManager layoutManager;
 
     private int lastVisibleItem;
+
+    private int loadMorePage;      //加载更多页数标记
 
     /**
      * 如果加载数据成功 就回调此方法
@@ -60,21 +65,26 @@ public class TopFragment extends BaseFragment {
                     @Override
                     public void run() {
 
-                        try {
-                            Thread.sleep(2000);
-
-                            for (int i=0;i<5;i++){
-                                mDatas.add(0,"这是新增的第"+i+"条数据");
-                            }
-
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        TopProtocol protocol=new TopProtocol();
+                        final String data=protocol.getDataFromServer(1);
+                        final ArrayList<TopInfo> mInfos=protocol.processData(data);
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                adapter.notifyDataSetChanged();
+
+                                if (data!=null){
+
+                                    if (!mDatas.containsAll(mInfos)){
+                                        mDatas.addAll(0,mInfos);
+                                        adapter.notifyDataSetChanged();
+                                    }
+
+                                    Toast.makeText(UIUtils.getContext(),"刷新成功",Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(UIUtils.getContext(),"刷新失败 请重试",Toast.LENGTH_SHORT).show();
+                                }
+
                                 swipe_refresh.setRefreshing(false);
                             }
                         });
@@ -102,19 +112,23 @@ public class TopFragment extends BaseFragment {
                                 e.printStackTrace();
                             }
 
-                            List<String> newDatas = new ArrayList<String>();
-                            for (int i = 0; i< 5; i++) {
-                                int index = i +1;
-                                newDatas.add("more item" + index);
-                            }
-                            mDatas.addAll(newDatas);
+                            loadMorePage=mDatas.get(mDatas.size()-1).curPage+1;
+
+                            TopProtocol protocol=new TopProtocol();
+                            final ArrayList<TopInfo> moreData=protocol.getData(loadMorePage);
 
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
 
-                                    adapter.notifyDataSetChanged();
-                                    adapter.changeMoreStatus(TopFragmentAdapter.PULLUP_LOAD_MORE);
+                                    if (moreData!=null){
+
+                                        mDatas.addAll(moreData);
+                                        adapter.notifyDataSetChanged();
+                                        adapter.changeMoreStatus(TopFragmentAdapter.PULLUP_LOAD_MORE);
+                                    }else{
+                                        adapter.changeMoreStatus(TopFragmentAdapter.LOAD_MORE_FAIL);
+                                    }
                                 }
                             });
                         }
@@ -141,18 +155,9 @@ public class TopFragment extends BaseFragment {
     @Override
     public LoadingPage.ResultState dataLoad() {
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        TopProtocol protocol=new TopProtocol();
+        mDatas=protocol.getData(1);
 
-        mDatas = new ArrayList<String>();
-
-        for (int i=0;i<20;i++){
-            mDatas.add("这是第"+i+"条数据");
-        }
-
-        return LoadingPage.ResultState.STATE_SUCCESS;
+        return dataCheck(mDatas);
     }
 }

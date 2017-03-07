@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.topnews.android.utils.UIUtils;
 import com.topnews.android.view.LoadingPage;
 
+import java.util.ArrayList;
+
 /**
  * Created by dell on 2017/2/25.
  */
@@ -67,5 +69,24 @@ public abstract class BaseFragment extends Fragment{
         if (loadingPage!=null){
             loadingPage.onLoad();
         }
+    }
+
+    /**
+     * 对获取的数据进行检查
+     * @return
+     */
+    public LoadingPage.ResultState dataCheck(Object obj){
+
+        if(obj!=null){
+            if(obj instanceof ArrayList){
+                ArrayList list=(ArrayList) obj;
+                if(list.isEmpty()){
+                    return LoadingPage.ResultState.STATE_EMPTY;
+                }else{
+                    return LoadingPage.ResultState.STATE_SUCCESS;
+                }
+            }
+        }
+        return LoadingPage.ResultState.STATE_ERROR;
     }
 }
