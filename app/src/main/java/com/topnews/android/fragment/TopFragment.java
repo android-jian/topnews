@@ -65,30 +65,34 @@ public class TopFragment extends BaseFragment {
                     @Override
                     public void run() {
 
-                        TopProtocol protocol=new TopProtocol();
-                        final String data=protocol.getDataFromServer(1);
-                        final ArrayList<TopInfo> mInfos=protocol.processData(data);
+                        final TopProtocol protocol = new TopProtocol();
+                        final String data = protocol.getDataFromServer(1);
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
 
-                                if (data!=null){
+                                if (data != null) {
 
-                                    if (!mDatas.containsAll(mInfos)){
-                                        mDatas.addAll(0,mInfos);
-                                        adapter.notifyDataSetChanged();
+                                    ArrayList<TopInfo> mInfos = protocol.processData(data);
+
+                                    for (int i = 0; i < mInfos.size(); i++) {
+                                        if (!mDatas.contains(mInfos.get(i))) {
+                                            mDatas.add(0, mInfos.get(i));
+                                        }
                                     }
 
-                                    Toast.makeText(UIUtils.getContext(),"刷新成功",Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(UIUtils.getContext(),"刷新失败 请重试",Toast.LENGTH_SHORT).show();
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(UIUtils.getContext(), "刷新成功", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(UIUtils.getContext(), "刷新失败 请重试", Toast.LENGTH_SHORT).show();
                                 }
 
                                 swipe_refresh.setRefreshing(false);
                             }
                         });
                     }
+
                 }).start();
             }
         });

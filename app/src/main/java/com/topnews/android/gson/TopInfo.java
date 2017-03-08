@@ -19,4 +19,15 @@ public class TopInfo {
     public String ContentUrl;
 
     public int curPage;    //当前页面
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (!(obj instanceof TopInfo))
+            return false;
+
+        TopInfo info= (TopInfo) obj;
+
+        return this.title.equals(info.title);
+    }
 }
