@@ -9,10 +9,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.topnews.android.R;
 import com.topnews.android.gson.TopInfo;
+import com.topnews.android.utils.UIUtils;
 
 import java.util.List;
+
 
 /**
  * Created by dell on 2017/3/5.
@@ -51,7 +54,6 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item,parent,false);
             final ItemViewHolder itemViewHolder=new ItemViewHolder(view);
 
-
             itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -85,8 +87,11 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         if (holder instanceof ItemViewHolder){
 
-            ((ItemViewHolder) holder).iv_icon.setImageResource(R.drawable.icon);
-            ((ItemViewHolder) holder).tv_text.setText(mDatas.get(position).title);
+            Glide.with(UIUtils.getContext()).load(mDatas.get(position).imgeUrl).placeholder(R.drawable.icon)
+                    .error(R.drawable.icon).into(((ItemViewHolder) holder).iv_icon);
+
+            ((ItemViewHolder) holder).tv_title.setText(mDatas.get(position).title);
+            ((ItemViewHolder) holder).tv_source.setText(mDatas.get(position).source);
 
             holder.itemView.setTag(position);
         }else if (holder instanceof FootViewHolder){
@@ -138,7 +143,8 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         View itemView;
 
         ImageView iv_icon;
-        TextView tv_text;
+        TextView tv_title;
+        TextView tv_source;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -146,7 +152,8 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             this.itemView=itemView;
 
             iv_icon= (ImageView) itemView.findViewById(R.id.iv_icon);
-            tv_text= (TextView) itemView.findViewById(R.id.tv_text);
+            tv_title= (TextView) itemView.findViewById(R.id.tv_title);
+            tv_source= (TextView) itemView.findViewById(R.id.tv_source);
         }
     }
 
