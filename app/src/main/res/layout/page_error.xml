@@ -11,11 +11,12 @@
         android:src="@drawable/ic_error_page"/>
     
     <Button
+        android:id="@+id/btn_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="点击重新加载"
         android:textSize="15sp"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@android:color/black"
         android:layout_marginTop="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"

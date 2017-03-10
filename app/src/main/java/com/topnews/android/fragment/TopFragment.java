@@ -1,5 +1,6 @@
 package com.topnews.android.fragment;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,7 @@ public class TopFragment extends BaseFragment {
     private int lastVisibleItem;
 
     private int loadMorePage;      //加载更多页数标记
+    //private FloatingActionButton btn_float_top;
 
     /**
      * 如果加载数据成功 就回调此方法
@@ -47,6 +49,8 @@ public class TopFragment extends BaseFragment {
 
         swipe_refresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view);
+
+        //btn_float_top = (FloatingActionButton) view.findViewById(R.id.btn_back_top);
 
         layoutManager = new LinearLayoutManager(UIUtils.getContext());
         recycler_view.setLayoutManager(layoutManager);
@@ -149,6 +153,14 @@ public class TopFragment extends BaseFragment {
                 lastVisibleItem =layoutManager.findLastVisibleItemPosition();
             }
         });
+
+       /* btn_float_top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recycler_view.smoothScrollToPosition(0);
+            }
+        });*/
+
         return view;
     }
 

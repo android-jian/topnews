@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.UiThread;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.topnews.android.R;
@@ -69,6 +70,15 @@ public abstract class LoadingPage extends FrameLayout {
 
         if(pageError==null){                     //初始化页面加载失败的布局
             pageError = View.inflate(UIUtils.getContext(), R.layout.page_error,null);
+
+            Button btn_error= (Button) pageError.findViewById(R.id.btn_error);
+            btn_error.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onLoad();
+                }
+            });
+
             addView(pageError);
         }
 
