@@ -1,5 +1,7 @@
 package com.topnews.android.adapter;
 
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import com.topnews.android.R;
 import com.topnews.android.gson.TopInfo;
 import com.topnews.android.utils.UIUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,11 +41,28 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private static final int TYPE_FOOTER = 1;           //底部FootView
 
+    private static final int TYPE_HEADER=2;             //顶部HeaderView
+
     private List<TopInfo> mDatas;
+
+    private ArrayList<ImageView> mListIcons;
+
+    private int[] mIconIds;
 
     public TopFragmentAdapter(List<TopInfo> mDatas){
 
         this.mDatas=mDatas;
+
+        mIconIds=new int[]{R.drawable.icon_01,R.drawable.icon_02,R.drawable.icon_03,R.drawable.icon_04};
+
+        mListIcons=new ArrayList<ImageView>();
+
+        for (int i=0;i<4;i++){
+
+            ImageView imageView=new ImageView(UIUtils.getContext());
+            imageView.setImageResource(mIconIds[i]);
+            mListIcons.add(imageView);
+        }
     }
 
     @Override
@@ -65,6 +85,7 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             });
 
             return itemViewHolder;
+
         }else if (viewType==TYPE_FOOTER){
 
             View foot_view=LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_foot,parent,false);
@@ -72,6 +93,13 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             //这边可以做一些属性设置，甚至事件监听绑定
             FootViewHolder footViewHolder=new FootViewHolder(foot_view);
             return footViewHolder;
+
+        }else if (viewType==TYPE_HEADER){
+
+            View header_view=LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_header,parent,false);
+            HeaderViewHolder headerViewHolder=new HeaderViewHolder(header_view);
+            return headerViewHolder;
+
         }
 
         return null;
@@ -87,13 +115,14 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         if (holder instanceof ItemViewHolder){
 
-            Glide.with(UIUtils.getContext()).load(mDatas.get(position).imgeUrl).placeholder(R.drawable.icon)
+            Glide.with(UIUtils.getContext()).load(mDatas.get(position-1).imgeUrl).placeholder(R.drawable.icon)
                     .error(R.drawable.icon).into(((ItemViewHolder) holder).iv_icon);
 
-            ((ItemViewHolder) holder).tv_title.setText(mDatas.get(position).title);
-            ((ItemViewHolder) holder).tv_source.setText(mDatas.get(position).source);
+            ((ItemViewHolder) holder).tv_title.setText(mDatas.get(position-1).title);
+            ((ItemViewHolder) holder).tv_source.setText(mDatas.get(position-1).source);
 
             holder.itemView.setTag(position);
+
         }else if (holder instanceof FootViewHolder){
 
             FootViewHolder footViewHolder=(FootViewHolder)holder;
@@ -119,22 +148,35 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     footViewHolder.progress_bar.setVisibility(View.GONE);
                     break;
             }
+
+        }else if (holder instanceof HeaderViewHolder){
+
+            HeaderViewHolder headerViewHolder= (HeaderViewHolder) holder;
+
+            MyPagerAdapter mAdapter= new MyPagerAdapter(mListIcons);
+            headerViewHolder.vp_icon_show.setAdapter(mAdapter);
+            //holder.itemView.setTag(position);
         }
     }
 
     @Override
     public int getItemViewType(int position) {
+
         // 最后一个item设置为footerView
         if (position + 1 == getItemCount()) {
             return TYPE_FOOTER;
-        } else {
+
+        }else if (position==0){
+            return TYPE_HEADER;
+
+        }else {
             return TYPE_ITEM;
         }
     }
 
     @Override
     public int getItemCount() {
-        return mDatas.size()+1;
+        return mDatas.size()+2;
     }
 
     //自定义的ViewHolder，持有每个Item的的所有界面元素
@@ -170,6 +212,17 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
+    public static class HeaderViewHolder extends RecyclerView.ViewHolder{
+
+        private ViewPager vp_icon_show;
+
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
+
+            vp_icon_show= (ViewPager) itemView.findViewById(R.id.vp_icon_show);
+        }
+    }
+
     /**
      * 更新加载更多状态
      * @param status
@@ -186,6 +239,42 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public int getLoadMoreStatus(){
 
         return load_more_status;
+    }
+
+
+    public class MyPagerAdapter extends PagerAdapter{
+
+        private ArrayList<ImageView> mListIcons;
+
+        public MyPagerAdapter(ArrayList<ImageView> mListIcons){
+
+            this.mListIcons=mListIcons;
+        }
+
+        @Override
+        public int getCount() {
+            return mListIcons.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view==object;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+
+            ImageView imageView=mListIcons.get(position);
+
+            container.addView(imageView);
+            return imageView;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+
+            container.removeView((View) object);
+        }
     }
 
 }
