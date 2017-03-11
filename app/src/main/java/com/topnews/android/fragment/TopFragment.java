@@ -1,10 +1,12 @@
 package com.topnews.android.fragment;
 
-import android.support.design.widget.FloatingActionButton;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.topnews.android.R;
@@ -36,7 +38,9 @@ public class TopFragment extends BaseFragment {
     private int lastVisibleItem;
 
     private int loadMorePage;      //加载更多页数标记
-    //private FloatingActionButton btn_float_top;
+
+    private ImageButton ib_back_top;
+    private float defaultY;
 
     /**
      * 如果加载数据成功 就回调此方法
@@ -50,7 +54,8 @@ public class TopFragment extends BaseFragment {
         swipe_refresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view);
 
-        //btn_float_top = (FloatingActionButton) view.findViewById(R.id.btn_back_top);
+        ib_back_top= (ImageButton) view.findViewById(R.id.ib_back_top);
+        defaultY = ib_back_top.getTranslationY();
 
         layoutManager = new LinearLayoutManager(UIUtils.getContext());
         recycler_view.setLayoutManager(layoutManager);
@@ -151,15 +156,26 @@ public class TopFragment extends BaseFragment {
 
                 super.onScrolled(recyclerView, dx, dy);
                 lastVisibleItem =layoutManager.findLastVisibleItemPosition();
+
+                if (layoutManager.findFirstVisibleItemPosition()==6 && dy>0){
+
+                    backTopShow();
+
+                }else if (layoutManager.findFirstVisibleItemPosition()==6 && dy<0){
+
+                    backTopHide();
+                }
             }
         });
 
-       /* btn_float_top.setOnClickListener(new View.OnClickListener() {
+        ib_back_top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 recycler_view.smoothScrollToPosition(0);
+                backTopHide();
             }
-        });*/
+        });
 
         return view;
     }
@@ -175,5 +191,31 @@ public class TopFragment extends BaseFragment {
         mDatas=protocol.getData(1);
 
         return dataCheck(mDatas);
+    }
+
+    /**
+     * 显示 返回顶部imagebutton
+     */
+    private void backTopShow(){
+
+        ObjectAnimator moveIn = ObjectAnimator.ofFloat(ib_back_top, "translationY", defaultY, -200f);
+        ObjectAnimator alphaUp= ObjectAnimator.ofFloat(ib_back_top,"alpha",0f,1f);
+        AnimatorSet animSet=new AnimatorSet();
+        animSet.play(moveIn).with(alphaUp);
+        animSet.setDuration(1000);
+        animSet.start();
+    }
+
+    /**
+     * 隐藏 返回顶部imagebutton
+     */
+    private void backTopHide(){
+
+        ObjectAnimator moveOut = ObjectAnimator.ofFloat(ib_back_top, "translationY", ib_back_top.getTranslationY(),defaultY );
+        ObjectAnimator alphaDown= ObjectAnimator.ofFloat(ib_back_top,"alpha",1f,0f);
+        AnimatorSet animSet=new AnimatorSet();
+        animSet.play(moveOut).with(alphaDown);
+        animSet.setDuration(500);
+        animSet.start();
     }
 }
