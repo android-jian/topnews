@@ -2,15 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.topnews.android">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".global.BaseApplication"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name="com.topnews.android.global.BaseApplication">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".ui.SplashActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.HomeActivity"/>
+        <activity android:name=".ui.HomeActivity" />
+        <activity android:name=".ui.NewsDetailActivity" android:label="News"/>
     </application>
 
 </manifest>

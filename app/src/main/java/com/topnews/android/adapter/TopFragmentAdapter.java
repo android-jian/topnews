@@ -1,5 +1,6 @@
 package com.topnews.android.adapter;
 
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.topnews.android.R;
 import com.topnews.android.gson.TopInfo;
+import com.topnews.android.ui.NewsDetailActivity;
 import com.topnews.android.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -84,7 +86,12 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                     int position =itemViewHolder.getAdapterPosition();
 
-                    Toast.makeText(v.getContext(),"你点击了第"+position+"条数据",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(v.getContext(),"你点击了第"+position+"条数据",Toast.LENGTH_SHORT).show();
+
+                    Intent intent=new Intent(UIUtils.getContext(), NewsDetailActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("url",mDatas.get(position-1).ContentUrl);
+                    UIUtils.getContext().startActivity(intent);
                 }
             });
 
@@ -169,7 +176,7 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (holder instanceof ItemViewHolder){
 
             Glide.with(UIUtils.getContext()).load(mDatas.get(position-1).imgeUrl).placeholder(R.drawable.icon)
-                    .error(R.drawable.icon).into(((ItemViewHolder) holder).iv_icon);
+                    .error(R.drawable.load_error).into(((ItemViewHolder) holder).iv_icon);
 
             ((ItemViewHolder) holder).tv_title.setText(mDatas.get(position-1).title);
             ((ItemViewHolder) holder).tv_source.setText(mDatas.get(position-1).source);
