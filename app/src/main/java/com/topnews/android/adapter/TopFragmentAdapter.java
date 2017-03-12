@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,9 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private ArrayList<ImageView> mListIcons;
 
     private int[] mIconIds;
+
+    private int mPreviousPos;           //上一个圆点被选中的位置
+    private HeaderViewHolder headerViewHolder;
 
     public TopFragmentAdapter(List<TopInfo> mDatas){
 
@@ -97,7 +101,56 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }else if (viewType==TYPE_HEADER){
 
             View header_view=LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_header,parent,false);
-            HeaderViewHolder headerViewHolder=new HeaderViewHolder(header_view);
+            headerViewHolder = new HeaderViewHolder(header_view);
+
+            for (int i=0;i<mListIcons.size();i++){
+
+                ImageView imView=new ImageView(UIUtils.getContext());
+                LinearLayout.LayoutParams llp= new LinearLayout.LayoutParams
+                        (LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                if (i==0){
+                    imView.setImageResource(R.drawable.point_selected);
+                }else{
+                    imView.setImageResource(R.drawable.point_nomal);
+                    llp.leftMargin=UIUtils.dip2px(4);
+                }
+                imView.setLayoutParams(llp);
+                headerViewHolder.linear_layout_points.addView(imView);
+            }
+
+            headerViewHolder.vp_icon_show.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+
+                    int pos=position%mListIcons.size();
+
+                    // 将当前圆点设置为选中样式
+                    ImageView view= (ImageView) headerViewHolder.linear_layout_points.getChildAt(pos);
+                    view.setImageResource(R.drawable.point_selected);
+
+                    if (pos!=mPreviousPos){
+                        // 将上一个圆点设置为默认样式
+                        ImageView prView= (ImageView) headerViewHolder.linear_layout_points.getChildAt(mPreviousPos);
+                        prView.setImageResource(R.drawable.point_nomal);
+                    }
+
+                    mPreviousPos=pos;
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+
+            new RunnableTask().start();
+
             return headerViewHolder;
 
         }
@@ -151,11 +204,15 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         }else if (holder instanceof HeaderViewHolder){
 
-            HeaderViewHolder headerViewHolder= (HeaderViewHolder) holder;
+            final HeaderViewHolder headerViewHolder= (HeaderViewHolder) holder;
 
             MyPagerAdapter mAdapter= new MyPagerAdapter(mListIcons);
             headerViewHolder.vp_icon_show.setAdapter(mAdapter);
+
+            headerViewHolder.vp_icon_show.setCurrentItem(mListIcons.size()*10000);
+
             //holder.itemView.setTag(position);
+
         }
     }
 
@@ -215,11 +272,13 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public static class HeaderViewHolder extends RecyclerView.ViewHolder{
 
         private ViewPager vp_icon_show;
+        private LinearLayout linear_layout_points;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
 
             vp_icon_show= (ViewPager) itemView.findViewById(R.id.vp_icon_show);
+            linear_layout_points= (LinearLayout) itemView.findViewById(R.id.linear_layout_points);
         }
     }
 
@@ -253,7 +312,7 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         @Override
         public int getCount() {
-            return mListIcons.size();
+            return Integer.MAX_VALUE;
         }
 
         @Override
@@ -263,6 +322,8 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
+
+            position=position%mListIcons.size();
 
             ImageView imageView=mListIcons.get(position);
 
@@ -274,6 +335,32 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public void destroyItem(ViewGroup container, int position, Object object) {
 
             container.removeView((View) object);
+        }
+    }
+
+    /**
+     * 自动轮播效果
+     */
+    class RunnableTask implements Runnable{
+
+        public void start(){
+
+            // 移除之前遗留的任务(handler只有一个,但HomeFragment有可能多次被创建,从而导致消息被重复发送,所以需要先把之前的消息移除掉)
+            UIUtils.getHandler().removeCallbacksAndMessages(null);
+
+            //发送延时2秒的任务
+            UIUtils.getHandler().postDelayed(this,2000);
+        }
+
+        @Override
+        public void run() {
+
+            int currentItem=headerViewHolder.vp_icon_show.getCurrentItem();
+            currentItem++;
+            headerViewHolder.vp_icon_show.setCurrentItem(currentItem);
+
+            // 继续发送延时两秒的任务, 形成闭环, 达到循环执行的效果
+            UIUtils.getHandler().postDelayed(this,2000);
         }
     }
 

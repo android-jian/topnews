@@ -66,4 +66,24 @@ public class UIUtils {
     public static String[] getStringArray(int id){
         return getContext().getResources().getStringArray(id);
     }
+
+    /**
+     * dp转px
+     * @param dp
+     * @return
+     */
+    public static int dip2px(int dp){
+        int mDensity=(int) getContext().getResources().getDisplayMetrics().density;
+        return dp*mDensity;
+    }
+
+    /**
+     * px转dp
+     * @param px
+     * @return
+     */
+    public static float px2dip(int px){
+        float mDensity=getContext().getResources().getDisplayMetrics().density;
+        return px/mDensity;
+    }
 }
