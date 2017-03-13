@@ -1,6 +1,7 @@
 package com.topnews.android.adapter;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -11,13 +12,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.topnews.android.R;
 import com.topnews.android.gson.TopInfo;
 import com.topnews.android.ui.NewsDetailActivity;
+import com.topnews.android.utils.SharPreUtil;
 import com.topnews.android.utils.UIUtils;
+
+import net.lucode.hackware.magicindicator.buildins.UIUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +88,12 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 public void onClick(View v) {
 
                     int position =itemViewHolder.getAdapterPosition();
+
+                    String readIds= SharPreUtil.getString(UIUtils.getContext(),"readIds","");
+                    if (!readIds.contains(mDatas.get(position-1).id)){
+                        SharPreUtil.setString(UIUtils.getContext(),"readIds",readIds+mDatas.get(position-1).id+",");
+                    }
+                    itemViewHolder.tv_title.setTextColor(Color.GRAY);
 
                     //Toast.makeText(v.getContext(),"你点击了第"+position+"条数据",Toast.LENGTH_SHORT).show();
 
@@ -180,6 +189,13 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             ((ItemViewHolder) holder).tv_title.setText(mDatas.get(position-1).title);
             ((ItemViewHolder) holder).tv_source.setText(mDatas.get(position-1).source);
+
+            String readIds=SharPreUtil.getString(UIUtils.getContext(),"readIds","");
+            if (readIds.contains(mDatas.get(position-1).id)){
+                ((ItemViewHolder) holder).tv_title.setTextColor(Color.GRAY);
+            }else {
+                ((ItemViewHolder) holder).tv_title.setTextColor(Color.BLACK);
+            }
 
             holder.itemView.setTag(position);
 

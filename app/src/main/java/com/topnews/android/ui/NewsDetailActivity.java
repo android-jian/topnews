@@ -1,6 +1,8 @@
 package com.topnews.android.ui;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -88,7 +90,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.backup:
-                Toast.makeText(this,"back up",Toast.LENGTH_SHORT).show();
+                finish();
                 break;
 
             case R.id.share:
@@ -104,12 +106,71 @@ public class NewsDetailActivity extends AppCompatActivity {
                 break;
 
             case R.id.text_size:
-                Toast.makeText(this,"textsize",Toast.LENGTH_SHORT).show();
+
+                textSizeDialog();
+
                 break;
 
             default:
                 break;
         }
         return true;
+    }
+
+    private int whichSelect;
+    private int curSelect=2;
+
+    /**
+     * 字体大小设置
+     */
+    private void textSizeDialog(){
+
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setTitle("字体大小设置");
+        String[] items={"超大号字体","大号字体","正常字体","小号字体","超小号字体"};
+
+        builder.setSingleChoiceItems(items,curSelect,new AlertDialog.OnClickListener(){
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                whichSelect=which;
+            }
+        });
+
+        builder.setPositiveButton("确定",new DialogInterface.OnClickListener(){
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                WebSettings webSet=mWebView.getSettings();
+
+                switch (whichSelect){
+
+                    case 0:
+                        webSet.setTextSize(WebSettings.TextSize.LARGEST);
+                        break;
+                    case 1:
+                        webSet.setTextSize(WebSettings.TextSize.LARGER);
+                        break;
+                    case 2:
+                        webSet.setTextSize(WebSettings.TextSize.NORMAL);
+                        break;
+                    case 3:
+                        webSet.setTextSize(WebSettings.TextSize.SMALLER);
+                        break;
+                    case 4:
+                        webSet.setTextSize(WebSettings.TextSize.SMALLEST);
+                        break;
+                    default:
+                        break;
+                }
+
+                curSelect=whichSelect;
+            }
+        });
+
+        builder.setNegativeButton("取消",null);
+        builder.show();
     }
 }
