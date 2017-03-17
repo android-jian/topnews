@@ -37,4 +37,5 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:design:24.2.1'
+    compile files('libs/MobCommons-2017.0216.1054.jar')
 }

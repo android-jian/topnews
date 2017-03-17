@@ -20,21 +20,28 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.topnews.android.R;
+import com.topnews.android.gson.TopInfo;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 public class NewsDetailActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private ProgressBar mProgress;
     private WebView mWebView;
+    private TopInfo topInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
+
+        ShareSDK.initSDK(this);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_news_detail);
         setSupportActionBar(toolbar);
@@ -42,8 +49,8 @@ public class NewsDetailActivity extends AppCompatActivity {
         mProgress = (ProgressBar) findViewById(R.id.pb_text_progress);
         mWebView = (WebView) findViewById(R.id.wv_show_text);
 
-        String mUrl=getIntent().getStringExtra("url");
-        mWebView.loadUrl(mUrl);
+        topInfo = (TopInfo) getIntent().getSerializableExtra("top_info");
+        mWebView.loadUrl(topInfo.ContentUrl);
 
         WebSettings mWebSet=mWebView.getSettings();
         mWebSet.setBuiltInZoomControls(true);
@@ -101,7 +108,9 @@ public class NewsDetailActivity extends AppCompatActivity {
                 break;
 
             case R.id.share:
-                Toast.makeText(this,"share",Toast.LENGTH_SHORT).show();
+
+                share();
+
                 break;
 
             case R.id.keep:
@@ -109,7 +118,6 @@ public class NewsDetailActivity extends AppCompatActivity {
                 break;
 
             case R.id.photo:
-                Toast.makeText(this,"photo",Toast.LENGTH_SHORT).show();
 
                 takeScreenShot(this);
 
@@ -237,5 +245,25 @@ public class NewsDetailActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * 分享
+     */
+    private void share(){
+
+        OnekeyShare share = new OnekeyShare();
+        share.disableSSOWhenAuthorize();
+
+        share.setText("源自"+topInfo.source);
+        // text是分享文本，所有平台都需要这个字段
+        share.setTitle(topInfo.title);
+        // url仅在微信（包括好友和朋友圈）中使用
+        share.setUrl(topInfo.ContentUrl);
+        share.setTitleUrl(topInfo.ContentUrl);
+        share.setImageUrl(topInfo.imgeUrl);
+
+        // 启动分享GUI
+        share.show(this);
     }
 }

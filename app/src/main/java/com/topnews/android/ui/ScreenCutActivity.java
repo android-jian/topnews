@@ -26,6 +26,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+
 public class ScreenCutActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ImageView imageView;
@@ -51,7 +54,7 @@ public class ScreenCutActivity extends AppCompatActivity implements View.OnClick
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 
-
+        ShareSDK.initSDK(this);
 
         imageView= (ImageView) findViewById(R.id.iv_image);
         iv_icon_show = (ImageView) findViewById(R.id.iv_icon_show);
@@ -193,7 +196,7 @@ public class ScreenCutActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-    /*private void showShare() {
+    private void showShare() {
 
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
@@ -203,7 +206,7 @@ public class ScreenCutActivity extends AppCompatActivity implements View.OnClick
 
         // 启动分享GUI
         oks.show(this);
-    }*/
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -245,7 +248,7 @@ public class ScreenCutActivity extends AppCompatActivity implements View.OnClick
                             out.flush();
                             out.close();
 
-                            //showShare();
+                            showShare();
 
                         } catch (IOException e) {
                             e.printStackTrace();

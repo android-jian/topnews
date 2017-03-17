@@ -99,7 +99,7 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                     Intent intent=new Intent(UIUtils.getContext(), NewsDetailActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("url",mDatas.get(position-1).ContentUrl);
+                    intent.putExtra("top_info",mDatas.get(position-1));
                     UIUtils.getContext().startActivity(intent);
                 }
             });
