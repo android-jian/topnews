@@ -20,8 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.HomeActivity" />
-        <activity android:name=".ui.NewsDetailActivity" android:label="News"/>
+        <activity android:name=".ui.NewsDetailActivity" android:label="新闻详情"/>
+        <activity android:name=".ui.ScreenCutActivity" android:label="截屏分享"/>
     </application>
 
 </manifest>

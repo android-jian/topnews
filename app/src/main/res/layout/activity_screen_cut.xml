@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F2F2F2">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <FrameLayout
+        android:id="@+id/fl_show"
+        android:layout_width="250dp"
+        android:layout_height="420dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_image"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:background="#FFF"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@drawable/xv"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="-10dp">
+
+                <EditText
+                    android:id="@+id/et_input"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:textSize="16sp"
+                    android:textColor="#F4A460"
+                    android:maxLines="2"
+                    android:text="我读书少，你可别骗我"
+                    android:background="@null"/>
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/yq"
+                    android:id="@+id/iv_icon_pencil"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_icon_show"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/a"
+            android:layout_marginBottom="10dp"/>
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:background="#666666"
+        android:layout_marginTop="5dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.4dp"
+        android:background="#666666"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <View
+            android:layout_width="0.4dp"
+            android:layout_height="match_parent"
+            android:background="#666666"/>
+
+        <ImageView
+            android:id="@+id/iv_one"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ys"
+            android:padding="4dp"
+            android:clickable="true"
+            android:background="#CCCCCC"/>
+
+        <View
+            android:layout_width="0.4dp"
+            android:layout_height="match_parent"
+            android:background="#666666"/>
+
+        <ImageView
+            android:id="@+id/iv_two"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:src="@drawable/yt"
+            android:padding="4dp"
+            android:clickable="true"/>
+
+        <View
+            android:layout_width="0.4dp"
+            android:layout_height="match_parent"
+            android:background="#666666"/>
+
+        <ImageView
+            android:id="@+id/iv_three"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:src="@drawable/yu"
+            android:padding="4dp"
+            android:clickable="true"/>
+
+        <View
+            android:layout_width="0.4dp"
+            android:layout_height="match_parent"
+            android:background="#666666"/>
+
+    </LinearLayout>
+
+</LinearLayout>

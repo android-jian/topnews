@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/iv_cutoon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/c"/>
+    <ImageView
+        android:id="@+id/iv_select"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/select"
+        android:layout_gravity="bottom"/>
+
+</LinearLayout>

@@ -14,21 +14,4 @@
         android:icon="@drawable/share"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/keep"
-        android:icon="@drawable/keep"
-        android:title="收藏"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/text_size"
-        android:icon="@drawable/text_size"
-        android:title="字体大小"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/photo"
-        android:icon="@drawable/photo"
-        android:title="截屏分享"
-        app:showAsAction="never"/>
 </menu>
