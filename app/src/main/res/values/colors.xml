@@ -7,4 +7,7 @@
     <color name="gray">#666666</color>
     <color name="yellow">#FFCC00</color>
 
+    <color name="setting_normal">#FFFFFF</color>
+    <color name="setting_selected">#E3E3E3</color>
+
 </resources>

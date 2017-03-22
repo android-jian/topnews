@@ -1,12 +1,423 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Setting pager"
-        android:textColor="@android:color/holo_red_light"
-        android:textSize="20sp"/>
+        android:orientation="vertical"
+        android:background="@color/colorPrimary">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:padding="20dp"
+            android:gravity="center_vertical">
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button_login"
+                android:text="登录"
+                android:textSize="16sp"
+                android:textColor="#F00"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机号快速注册"
+                android:textSize="12sp"
+                android:textColor="#FFF"
+                android:layout_marginLeft="10dp"/>
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/as"
+                android:layout_marginLeft="3dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                style="@style/setting_linear_layout_login">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/adm"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="微信登录"
+                    android:textColor="#FFF"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.4dp"
+                android:layout_height="20dp"
+                android:background="#FFF"/>
+
+            <LinearLayout
+                style="@style/setting_linear_layout_login">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/adk"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="微博登录"
+                    android:textColor="#FFF"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.4dp"
+                android:layout_height="20dp"
+                android:background="#FFF"/>
+
+            <LinearLayout
+                style="@style/setting_linear_layout_login">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/adi"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:text="QQ登录"
+                    android:textColor="#FFF"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        style="@style/setting_card_view"
+        android:layout_marginTop="-20dp"
+        android:elevation="5dp"
+        app:cardCornerRadius="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="我的收藏"
+                android:textColor="#666666"
+                android:textSize="14sp"
+                android:padding="10dp"
+                android:clickable="true"
+                android:background="@drawable/setting_bg"/>
+
+            <View
+                android:layout_width="0.2dp"
+                android:layout_height="match_parent"
+                android:background="#666666"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="我阅读的"
+                android:textColor="#666666"
+                android:textSize="14sp"
+                android:padding="10dp"
+                android:clickable="true"
+                android:background="@drawable/setting_bg"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        style="@style/setting_card_view"
+        android:elevation="5dp"
+        app:cardCornerRadius="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                style="@style/setting_linear_layout">
+
+                <ImageView
+                    style="@style/setting_image_view"
+                    android:src="@drawable/an"/>
+                <TextView
+                    style="@style/setting_text_view"
+                    android:text="订阅"/>
+            </LinearLayout>
+
+            <View style="@style/setting_view"/>
+
+            <LinearLayout
+                style="@style/setting_linear_layout">
+
+                <ImageView
+                    style="@style/setting_image_view"
+                    android:src="@drawable/ad"/>
+                <TextView
+                    style="@style/setting_text_view"
+                    android:text="收藏"/>/>
+            </LinearLayout>
+
+            <View style="@style/setting_view"/>
+
+            <LinearLayout
+                style="@style/setting_linear_layout">
+
+                <ImageView
+                    style="@style/setting_image_view"
+                    android:src="@drawable/ax"/>
+
+                <TextView
+                    style="@style/setting_text_view"
+                    android:text="跟帖"/>
+            </LinearLayout>
+
+            <View style="@style/setting_view"/>
+
+            <LinearLayout
+                style="@style/setting_linear_layout">
+
+                <ImageView
+                    style="@style/setting_image_view"
+                    android:src="@drawable/aq"/>
+                <TextView
+                    style="@style/setting_text_view"
+                    android:text="阅读"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                style="@style/setting_card_view"
+                android:elevation="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        style="@style/setting_relative_layout">
+                        <ImageView
+                            android:id="@+id/ado"
+                            style="@style/setting_image_view"
+                            android:src="@drawable/ado"/>
+                        <TextView
+                            style="@style/setting_scroll_text_view"
+                            android:layout_toRightOf="@id/ado"
+                            android:text="我的消息" />
+                        <ImageView
+                            style="@style/setting_scroll_image_view"/>
+                    </RelativeLayout>
+
+                    <View
+                        style="@style/setting_scroll_view"/>
+
+                    <RelativeLayout
+                        style="@style/setting_relative_layout">
+                        <ImageView
+                            android:id="@+id/aje"
+                            style="@style/setting_image_view"
+                            android:src="@drawable/aje"/>
+                        <TextView
+                            style="@style/setting_scroll_text_view"
+                            android:layout_toRightOf="@id/aje"
+                            android:text="最新动态"/>
+                        <ImageView
+                            style="@style/setting_scroll_image_view"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                style="@style/setting_card_view"
+                android:elevation="5dp"
+                app:cardCornerRadius="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        style="@style/setting_relative_layout">
+                        <ImageView
+                            android:id="@+id/adc"
+                            style="@style/setting_image_view"
+                            android:src="@drawable/adc"/>
+                        <TextView
+                            style="@style/setting_scroll_text_view"
+                            android:layout_toRightOf="@id/adc"
+                            android:text="金币商城"/>
+                        <ImageView
+                            style="@style/setting_scroll_image_view"/>
+                    </RelativeLayout>
+
+                    <View
+                        style="@style/setting_scroll_view"/>
+
+                    <RelativeLayout
+                        style="@style/setting_relative_layout">
+                        <ImageView
+                            android:id="@+id/ae"
+                            style="@style/setting_image_view"
+                            android:src="@drawable/ae"/>
+                        <TextView
+                            style="@style/setting_scroll_text_view"
+                            android:layout_toRightOf="@id/ae"
+                            android:text="我的钱包"/>
+                        <ImageView
+                            style="@style/setting_scroll_image_view"/>
+                    </RelativeLayout>
+
+                    <View
+                        style="@style/setting_scroll_view"/>
+
+                    <RelativeLayout
+                        style="@style/setting_relative_layout">
+                        <ImageView
+                            android:id="@+id/aek"
+                            style="@style/setting_image_view"
+                            android:src="@drawable/aek"/>
+                        <TextView
+                            style="@style/setting_scroll_text_view"
+                            android:layout_toRightOf="@id/aek"
+                            android:text="金币任务"/>
+                        <ImageView
+                            style="@style/setting_scroll_image_view"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                style="@style/setting_card_view"
+                android:layout_marginBottom="10dp"
+                android:elevation="5dp"
+                app:cardCornerRadius="4dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        style="@style/setting_relative_layout">
+                        <ImageView
+                            android:id="@+id/adr"
+                            style="@style/setting_image_view"
+                            android:src="@drawable/adr"/>
+                        <TextView
+                            style="@style/setting_scroll_text_view"
+                            android:layout_toRightOf="@id/adr"
+                            android:text="离线阅读"/>
+                        <ImageView
+                            style="@style/setting_scroll_image_view"/>
+                    </RelativeLayout>
+
+                    <View
+                        style="@style/setting_scroll_view"/>
+
+                    <RelativeLayout
+                        style="@style/setting_relative_layout">
+                        <ImageView
+                            android:id="@+id/adp"
+                            style="@style/setting_image_view"
+                            android:src="@drawable/adp"/>
+                        <TextView
+                            style="@style/setting_scroll_text_view"
+                            android:layout_toRightOf="@id/adp"
+                            android:text="离线阅读"/>
+                        <ImageView
+                            style="@style/setting_scroll_image_view"/>
+                    </RelativeLayout>
+
+                    <View
+                        style="@style/setting_scroll_view"/>
+
+                    <RelativeLayout
+                        style="@style/setting_relative_layout">
+                        <ImageView
+                            android:id="@+id/adu"
+                            style="@style/setting_image_view"
+                            android:src="@drawable/adu"/>
+                        <TextView
+                            style="@style/setting_scroll_text_view"
+                            android:layout_toRightOf="@id/adu"
+                            android:text="活动广场"/>
+                        <ImageView
+                            style="@style/setting_scroll_image_view"/>
+                    </RelativeLayout>
+
+                    <View
+                        style="@style/setting_scroll_view"/>
+
+                    <RelativeLayout
+                        style="@style/setting_relative_layout">
+                        <ImageView
+                            android:id="@+id/ad_"
+                            style="@style/setting_image_view"
+                            android:src="@drawable/ad_"/>
+                        <TextView
+                            style="@style/setting_scroll_text_view"
+                            android:layout_toRightOf="@id/ad_"
+                            android:text="意见反馈"/>
+                        <ImageView
+                            style="@style/setting_scroll_image_view"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
 </LinearLayout>
