@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
+import cn.bmob.v3.Bmob;
+
 /**
  * Created by dell on 2017/2/26.
  *
@@ -26,6 +28,8 @@ public class BaseApplication extends Application {
         this.mContext=getApplicationContext();
         mHandler=new Handler();
         mainThreadId=android.os.Process.myTid();      //获取主线程id
+
+        Bmob.initialize(this, "c3afc6b5c969611f04beb79125e3ec2f");
     }
 
     public static Context getmContext(){

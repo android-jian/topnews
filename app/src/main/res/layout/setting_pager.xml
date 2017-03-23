@@ -20,6 +20,7 @@
             android:gravity="center_vertical">
 
             <Button
+                android:id="@+id/btn_setting_login"
                 android:layout_width="120dp"
                 android:layout_height="35dp"
                 android:background="@drawable/button_login"
@@ -190,7 +191,7 @@
                     android:src="@drawable/ad"/>
                 <TextView
                     style="@style/setting_text_view"
-                    android:text="收藏"/>/>
+                    android:text="收藏"/>
             </LinearLayout>
 
             <View style="@style/setting_view"/>
