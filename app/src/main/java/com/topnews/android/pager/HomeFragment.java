@@ -2,20 +2,22 @@ package com.topnews.android.pager;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.topnews.android.R;
 import com.topnews.android.fragment.BaseFragment;
 import com.topnews.android.fragment.FragmentFactory;
-import com.topnews.android.fragment.TopFragment;
 import com.topnews.android.utils.UIUtils;
-import com.topnews.android.view.LoadingPage;
 import com.topnews.android.view.ScaleTransitionPagerTitleView;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -32,31 +34,24 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by dell on 2017/2/26.
- *
- * 标签页-首页
+ * Created by dell on 2017/3/23.
  */
 
-public class HomePager extends BasePager {
+public class HomeFragment extends BasePagerFragment{
 
     private ViewPager vp_detail;
     private List<String> tabNames;
 
-    private FragmentManager fragmentManager;
-
-    public HomePager(FragmentManager fragmentManager){
-        this.fragmentManager=fragmentManager;
-    }
-
+    @Nullable
     @Override
-    public View initView() {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view=View.inflate(UIUtils.getContext(), R.layout.home_pager,null);
         vp_detail = (ViewPager) view.findViewById(R.id.vp_detail);
 
         tabNames = Arrays.asList(UIUtils.getStringArray(R.array.tab_names));
 
-        MyFragmentAdapter adapter=new MyFragmentAdapter(fragmentManager);
+        MyFragmentAdapter adapter=new MyFragmentAdapter(getActivity().getSupportFragmentManager());
         vp_detail.setAdapter(adapter);
 
         MagicIndicator magicIndicator = (MagicIndicator) view.findViewById(R.id.magic_indicator);
@@ -108,7 +103,7 @@ public class HomePager extends BasePager {
 
             @Override
             public void onPageSelected(int position) {
-                BaseFragment fragment=FragmentFactory.creatFragment(position);
+                BaseFragment fragment= FragmentFactory.creatFragment(position);
                 fragment.initData();
             }
 
@@ -121,12 +116,7 @@ public class HomePager extends BasePager {
         return view;
     }
 
-    @Override
-    public void initData() {
-
-    }
-
-    public class MyFragmentAdapter extends FragmentPagerAdapter{
+    public class MyFragmentAdapter extends FragmentPagerAdapter {
 
         public MyFragmentAdapter(FragmentManager fm) {
             super(fm);

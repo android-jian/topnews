@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/dialog_first"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:clickable="true"
+        android:background="@drawable/setting_bg"
+        android:padding="5dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/dialog_photo"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="照相"
+            android:textColor="#000"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialog_second"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:clickable="true"
+        android:background="@drawable/setting_bg"
+        android:padding="5dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/dialog_icons"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="图片库"
+            android:textColor="#000"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialog_third"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:clickable="true"
+        android:background="@drawable/setting_bg"
+        android:padding="5dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/dialog_sina"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="新浪微博"
+            android:textColor="#000"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

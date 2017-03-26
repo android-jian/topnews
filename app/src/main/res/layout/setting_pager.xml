@@ -5,116 +5,163 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@color/colorPrimary">
 
         <LinearLayout
+            android:id="@+id/head_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:padding="20dp"
-            android:gravity="center_vertical">
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btn_setting_login"
-                android:layout_width="120dp"
-                android:layout_height="35dp"
-                android:background="@drawable/button_login"
-                android:text="登录"
-                android:textSize="16sp"
-                android:textColor="#F00"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:padding="20dp"
+                android:gravity="center_vertical">
+
+                <Button
+                    android:id="@+id/btn_setting_login"
+                    android:layout_width="120dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/button_login"
+                    android:text="登录"
+                    android:textSize="16sp"
+                    android:textColor="#F00"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="手机号快速注册"
+                    android:textSize="12sp"
+                    android:textColor="#FFF"
+                    android:layout_marginLeft="10dp"/>
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/as"
+                    android:layout_marginLeft="3dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    style="@style/setting_linear_layout_login">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/adm"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:text="微信登录"
+                        android:textColor="#FFF"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.4dp"
+                    android:layout_height="20dp"
+                    android:background="#FFF"/>
+
+                <LinearLayout
+                    style="@style/setting_linear_layout_login">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/adk"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:text="微博登录"
+                        android:textColor="#FFF"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.4dp"
+                    android:layout_height="20dp"
+                    android:background="#FFF"/>
+
+                <LinearLayout
+                    style="@style/setting_linear_layout_login">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/adi"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:text="QQ登录"
+                        android:textColor="#FFF"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/head_user_info"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:visibility="gone">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/setting_head_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/adf"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"/>
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFF"
+                android:textSize="20sp"
+                android:text="你好啊"
+                android:layout_toRightOf="@id/setting_head_icon"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="40dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="手机号快速注册"
-                android:textSize="12sp"
-                android:textColor="#FFF"
+                android:padding="3dp"
+                android:text="金币20"
+                android:textSize="8sp"
+                android:background="@drawable/border_textview"
+                android:textColor="#FF9900"
+                android:layout_toRightOf="@id/setting_head_icon"
+                android:layout_marginTop="70dp"
                 android:layout_marginLeft="10dp"/>
+        </RelativeLayout>
 
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:src="@drawable/as"
-                android:layout_marginLeft="3dp"/>
+    </FrameLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="10dp">
-
-            <LinearLayout
-                style="@style/setting_linear_layout_login">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/adm"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:text="微信登录"
-                    android:textColor="#FFF"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="0.4dp"
-                android:layout_height="20dp"
-                android:background="#FFF"/>
-
-            <LinearLayout
-                style="@style/setting_linear_layout_login">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/adk"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:text="微博登录"
-                    android:textColor="#FFF"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="0.4dp"
-                android:layout_height="20dp"
-                android:background="#FFF"/>
-
-            <LinearLayout
-                style="@style/setting_linear_layout_login">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/adi"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:text="QQ登录"
-                    android:textColor="#FFF"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="30dp"/>
-    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/colorPrimary"/>
 
     <android.support.v7.widget.CardView
         style="@style/setting_card_view"

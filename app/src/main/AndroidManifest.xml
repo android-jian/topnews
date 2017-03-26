@@ -16,6 +16,10 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:name=".global.BaseApplication"
         android:allowBackup="true"
@@ -72,6 +76,19 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".ui.LoginActivity"></activity>
+
+        <provider
+            android:authorities="com.jian.android.screencut.takephoto"
+            android:name="android.support.v4.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+
+        </provider>
+
     </application>
 
 </manifest>

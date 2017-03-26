@@ -1,5 +1,6 @@
 package com.topnews.android.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -47,10 +48,12 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void done(MyUser user, BmobException e) {
                         if(user!=null){
-                            Toast.makeText(LoginActivity.this,"登陆成功，"+user.getUsername(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
 
-                           /* Intent intent=new Intent(SignUpActivity.this,MySettingActivity.class);
-                            startActivity(intent);*/
+                            Intent intent=new Intent();
+                            intent.putExtra("userData",user);
+                            setResult(RESULT_OK,intent);
+                            finish();
 
                         }else{
                             Toast.makeText(LoginActivity.this,"登陆失败，请重试，"+"错误码："+e.getErrorCode()+",错误原因："+e.getLocalizedMessage(),Toast.LENGTH_SHORT).show();

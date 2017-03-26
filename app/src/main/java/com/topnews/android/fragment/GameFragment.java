@@ -13,6 +13,7 @@ public class GameFragment extends BaseFragment {
 
     @Override
     public View onCreateSuccessView() {
+
         return null;
     }
 

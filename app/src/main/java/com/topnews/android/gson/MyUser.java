@@ -1,12 +1,15 @@
 package com.topnews.android.gson;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 
 /**
  * Created by dell on 2017/3/22.
  */
 
-public class MyUser extends BmobUser {
+public class MyUser extends BmobUser implements Serializable{
 
     private String icon;        //我的头像
 
