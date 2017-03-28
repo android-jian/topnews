@@ -4,7 +4,9 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -21,10 +23,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -61,6 +65,10 @@ public class SettingFragment extends BasePagerFragment{
     private RelativeLayout mUserInfo;
     private CircleImageView mIcon;
     private TextView mName;
+    private RelativeLayout mChangeSkin;
+    private SharedPreferences sp;
+    private boolean isNight;
+    private ImageView mIsNight;
 
     @Nullable
     @Override
@@ -72,6 +80,10 @@ public class SettingFragment extends BasePagerFragment{
         mUserInfo = (RelativeLayout) view.findViewById(R.id.head_user_info);
         mIcon = (CircleImageView) view.findViewById(R.id.setting_head_icon);
         mName = (TextView) view.findViewById(R.id.tv_name);
+        mChangeSkin = (RelativeLayout) view.findViewById(R.id.setting_change_skin);
+        mIsNight = (ImageView) view.findViewById(R.id.iv_is_night);
+
+        sp = getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
 
         settingLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +129,24 @@ public class SettingFragment extends BasePagerFragment{
             }
         });
 
+        isNight = sp.getBoolean("night", false);
+        if (isNight) {
+            mIsNight.setImageResource(R.drawable.apointe);
+
+        } else {
+            mIsNight.setImageResource(R.drawable.apointd);
+        }
+
+        mChangeSkin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isNightMode();
+                getActivity().recreate();
+
+            }
+        });
+
         return view;
     }
 
@@ -143,7 +173,7 @@ public class SettingFragment extends BasePagerFragment{
                     Glide.with(this).load(imageUri).diskCacheStrategy(DiskCacheStrategy.NONE).
                             skipMemoryCache(true).into(mIcon);
 
-                    /*String iconPath=getImagePath(imageUri,null);
+                    /*String iconPath="//sdcard//Android//data//com.topnews.android//cache//output_image.jpg";
                     upLoadUserIcon(iconPath);*/
                 }
                 break;
@@ -338,6 +368,23 @@ public class SettingFragment extends BasePagerFragment{
                 }
             });
         }
+    }
+
+    /**
+     * 夜间模式切换
+     */
+    private void isNightMode(){
+
+        isNight = sp.getBoolean("night", false);
+        if (isNight) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            sp.edit().putBoolean("night", false).commit();
+
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            sp.edit().putBoolean("night", true).commit();
+        }
+
     }
 
 }

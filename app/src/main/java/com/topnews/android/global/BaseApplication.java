@@ -30,6 +30,8 @@ public class BaseApplication extends Application {
         mainThreadId=android.os.Process.myTid();      //获取主线程id
 
         Bmob.initialize(this, "c3afc6b5c969611f04beb79125e3ec2f");
+
+        getSharedPreferences("config",MODE_PRIVATE).edit().putBoolean("night", false).commit();
     }
 
     public static Context getmContext(){

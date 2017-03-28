@@ -9,6 +9,11 @@
 
     </style>
 
+    <style name="Theme.AppCompat.Light.NoActionBar" parent="Theme.AppCompat.DayNight">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="Bottom_Tab_Style">
 
         <item name="android:layout_width">0dp</item>

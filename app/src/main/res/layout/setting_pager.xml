@@ -414,6 +414,7 @@
                         style="@style/setting_scroll_view"/>
 
                     <RelativeLayout
+                        android:id="@+id/setting_change_skin"
                         style="@style/setting_relative_layout">
                         <ImageView
                             android:id="@+id/adp"
@@ -422,9 +423,14 @@
                         <TextView
                             style="@style/setting_scroll_text_view"
                             android:layout_toRightOf="@id/adp"
-                            android:text="离线阅读"/>
+                            android:text="夜间模式"/>
+
                         <ImageView
-                            style="@style/setting_scroll_image_view"/>
+                            android:id="@+id/iv_is_night"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/apointd"
+                            android:layout_alignParentRight="true"/>
                     </RelativeLayout>
 
                     <View
