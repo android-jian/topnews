@@ -69,6 +69,7 @@ public class SettingFragment extends BasePagerFragment{
     private SharedPreferences sp;
     private boolean isNight;
     private ImageView mIsNight;
+    private Button mQuikSign;
 
     @Nullable
     @Override
@@ -82,6 +83,7 @@ public class SettingFragment extends BasePagerFragment{
         mName = (TextView) view.findViewById(R.id.tv_name);
         mChangeSkin = (RelativeLayout) view.findViewById(R.id.setting_change_skin);
         mIsNight = (ImageView) view.findViewById(R.id.iv_is_night);
+        mQuikSign = (Button) view.findViewById(R.id.btn_quik_sign);
 
         sp = getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
 
@@ -146,6 +148,24 @@ public class SettingFragment extends BasePagerFragment{
 
             }
         });
+
+        //获取本地用户 优化用户体验
+        MyUser curUser=BmobUser.getCurrentUser(MyUser.class);
+        if (curUser==null){
+
+            headLogin.setVisibility(View.VISIBLE);
+            mUserInfo.setVisibility(View.GONE);
+
+        }else {
+
+            headLogin.setVisibility(View.GONE);
+            mUserInfo.setVisibility(View.VISIBLE);
+
+            //获取本地用户信息
+            mName.setText(curUser.getUsername());
+            Glide.with(this).load(curUser.getIcon()).error(R.drawable.adf)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mIcon);
+        }
 
         return view;
     }
