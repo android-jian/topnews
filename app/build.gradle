@@ -45,4 +45,5 @@ dependencies {
     compile 'cn.bmob.android:bmob-sdk:3.5.0'
     compile 'com.android.support:support-v4:24.2.1'
     testCompile 'junit:junit:4.12'
+    compile 'cn.bmob.android:bmob-sms:1.0.1'
 }

@@ -156,6 +156,29 @@
                 android:layout_toRightOf="@id/setting_head_icon"
                 android:layout_marginTop="70dp"
                 android:layout_marginLeft="10dp"/>
+
+            <LinearLayout
+                android:id="@+id/setting_login_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal"
+                android:clickable="true">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/login_out"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="16sp"
+                    android:textColor="#FFF"
+                    android:text="登出"/>
+            </LinearLayout>
+
         </RelativeLayout>
 
     </FrameLayout>
@@ -233,6 +256,7 @@
             <View style="@style/setting_view"/>
 
             <LinearLayout
+                android:id="@+id/setting_my_keep"
                 style="@style/setting_linear_layout">
 
                 <ImageView

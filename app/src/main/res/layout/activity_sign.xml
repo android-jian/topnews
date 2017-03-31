@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="30dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:text="欢迎注册邮箱账号"/>
+
+    <RelativeLayout
+        android:id="@+id/sign_by_phone"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:clickable="true">
+
+        <ImageView
+            android:id="@+id/icon_phone"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/phone"/>
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号注册"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_toRightOf="@id/icon_phone"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:layout_toRightOf="@id/icon_phone"
+            android:layout_below="@id/tv_phone"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:textSize="16sp"
+            android:text="免费验证短信，快速注册"/>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/right"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sign_by_email"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:clickable="true">
+
+        <ImageView
+            android:id="@+id/icon_email"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/email"/>
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="邮箱注册"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_toRightOf="@id/icon_email"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:layout_toRightOf="@id/icon_email"
+            android:layout_below="@id/tv_email"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:textSize="16sp"
+            android:text="免费验证短信，快速注册"/>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/right"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"/>
+    </RelativeLayout>
+
+</LinearLayout>

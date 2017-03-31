@@ -20,12 +20,17 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.topnews.android.R;
+import com.topnews.android.gson.MyUser;
 import com.topnews.android.gson.TopInfo;
+import com.topnews.android.utils.UIUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
@@ -114,7 +119,9 @@ public class NewsDetailActivity extends AppCompatActivity {
                 break;
 
             case R.id.keep:
-                Toast.makeText(this,"keep",Toast.LENGTH_SHORT).show();
+
+                mUserKeep();
+
                 break;
 
             case R.id.photo:
@@ -265,5 +272,33 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         // 启动分享GUI
         share.show(this);
+    }
+
+    /**
+     * 用户收藏
+     */
+    private void mUserKeep(){
+
+        MyUser mUser= BmobUser.getCurrentUser(MyUser.class);
+        if (mUser==null){
+            Intent intent=new Intent(UIUtils.getContext(),LoginActivity.class);
+            startActivity(intent);
+
+        }else {
+            MyUser newUser=new MyUser();
+            newUser.add("keep",topInfo);
+            newUser.update(mUser.getObjectId(), new UpdateListener() {
+                @Override
+                public void done(BmobException e) {
+
+                    if (e==null){
+                        Toast.makeText(UIUtils.getContext(),"收藏成功",Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(UIUtils.getContext(),"收藏失败，请重试",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 package com.topnews.android.gson;
 
 import java.io.Serializable;
+import java.util.List;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
@@ -13,7 +14,7 @@ public class MyUser extends BmobUser implements Serializable{
 
     private String icon;        //我的头像
 
-    private String keep;       //我的收藏
+    private List<TopInfo> keep;       //我的收藏
 
     public String getIcon() {
         return icon;
@@ -23,11 +24,11 @@ public class MyUser extends BmobUser implements Serializable{
         this.icon = icon;
     }
 
-    public String getKeep() {
+    public List<TopInfo> getKeep() {
         return keep;
     }
 
-    public void setKeep(String keep) {
+    public void setKeep(List<TopInfo> keep) {
         this.keep = keep;
     }
 }

@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -39,6 +40,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.topnews.android.R;
 import com.topnews.android.gson.MyUser;
 import com.topnews.android.ui.LoginActivity;
+import com.topnews.android.ui.SignActivity;
+import com.topnews.android.ui.UserKeepActivity;
 import com.topnews.android.utils.UIUtils;
 
 import java.io.File;
@@ -70,6 +73,8 @@ public class SettingFragment extends BasePagerFragment{
     private boolean isNight;
     private ImageView mIsNight;
     private Button mQuikSign;
+    private LinearLayout mKeep;
+    private LinearLayout mUserLoginOut;
 
     @Nullable
     @Override
@@ -84,6 +89,8 @@ public class SettingFragment extends BasePagerFragment{
         mChangeSkin = (RelativeLayout) view.findViewById(R.id.setting_change_skin);
         mIsNight = (ImageView) view.findViewById(R.id.iv_is_night);
         mQuikSign = (Button) view.findViewById(R.id.btn_quik_sign);
+        mKeep = (LinearLayout) view.findViewById(R.id.setting_my_keep);
+        mUserLoginOut = (LinearLayout) view.findViewById(R.id.setting_login_out);
 
         sp = getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
 
@@ -166,6 +173,40 @@ public class SettingFragment extends BasePagerFragment{
             Glide.with(this).load(curUser.getIcon()).error(R.drawable.adf)
                     .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mIcon);
         }
+
+        mKeep.setOnClickListener(new View.OnClickListener() {
+            private Intent intent;
+
+            @Override
+            public void onClick(View v) {
+
+                MyUser mUser=BmobUser.getCurrentUser(MyUser.class);
+
+                if (mUser==null){
+                     intent= new Intent(UIUtils.getContext(),LoginActivity.class);
+                }else {
+                     intent=new Intent(UIUtils.getContext(), UserKeepActivity.class);
+                }
+                startActivity(intent);
+            }
+        });
+
+        mUserLoginOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                userLoginOut();
+            }
+        });
+
+        mQuikSign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(UIUtils.getContext(), SignActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -405,6 +446,24 @@ public class SettingFragment extends BasePagerFragment{
             sp.edit().putBoolean("night", true).commit();
         }
 
+    }
+
+    /**
+     * 用户登出
+     */
+    private void userLoginOut(){
+
+        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+        builder.setTitle("您确定要登出吗？");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                BmobUser.logOut();
+                getActivity().recreate();
+            }
+        });
+        builder.setNegativeButton("取消",null);
+        builder.show();
     }
 
 }
