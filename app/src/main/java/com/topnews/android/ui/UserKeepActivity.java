@@ -2,10 +2,10 @@ package com.topnews.android.ui;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.topnews.android.R;
@@ -28,24 +28,26 @@ public class UserKeepActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.keep_toolBar);
         setSupportActionBar(toolbar);
 
-        ActionBar actionBar=getSupportActionBar();
-        if (actionBar!=null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.keep_back);
-        }
-
         mViewPager.setAdapter(new KeepFragmentAdapter(getSupportFragmentManager()));
         mTabLayout.setupWithViewPager(mViewPager);
+
+        mViewPager.setOffscreenPageLimit(2);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        getMenuInflater().inflate(R.menu.userkeep,menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
 
-            case android.R.id.home:
+            case R.id.backup:
 
                 finish();
                 break;
@@ -53,6 +55,8 @@ public class UserKeepActivity extends AppCompatActivity {
             default:
                 break;
         }
-        return true;
+
+        return super.onOptionsItemSelected(item);
     }
+
 }

@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class KeepFragmentAdapter extends FragmentPagerAdapter {
 
-    BaseKeepFragment fragment=null;
     private final String[] mTabNames;
 
     public KeepFragmentAdapter(FragmentManager fm) {
@@ -23,23 +22,7 @@ public class KeepFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        switch (position){
-
-            case 0:
-                fragment=new KeepOneFragment();
-                break;
-
-            case 1:
-                fragment=new KeepTwoFragment();
-                break;
-
-            case 2:
-                fragment=new KeepThreeFragment();
-                break;
-
-            default:
-                break;
-        }
+        BaseKeepFragment fragment=KeepFragmentFactory.creatFragment(position);
 
         return fragment;
     }

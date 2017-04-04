@@ -1,5 +1,7 @@
 package com.topnews.android.keepfragment;
 
+import android.view.View;
+
 /**
  * Created by dell on 2017/3/28.
  *
@@ -7,4 +9,14 @@ package com.topnews.android.keepfragment;
  */
 
 public class KeepTwoFragment extends BaseKeepFragment {
+
+    @Override
+    public void dataLoad() {
+        setCurState(DATA_LOAD_ERROR);
+    }
+
+    @Override
+    public View onSuccessView() {
+        return null;
+    }
 }

@@ -275,7 +275,7 @@ public class NewsDetailActivity extends AppCompatActivity {
     }
 
     /**
-     * 用户收藏
+     * 用户收藏   更新用户操作并同步更新本地的用户信息
      */
     private void mUserKeep(){
 
