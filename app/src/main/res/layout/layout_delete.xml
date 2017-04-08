@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="60dp">
+
+  <TextView
+      android:id="@+id/tv_delete"
+      android:layout_width="100dp"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:text="取消收藏"
+      android:textSize="16sp"
+      android:textColor="@android:color/white"
+      android:background="#F00"/>
+</LinearLayout>
