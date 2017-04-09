@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.topnews.android.R;
+import com.topnews.android.gson.KeepInfo;
 import com.topnews.android.gson.MyUser;
 import com.topnews.android.gson.TopInfo;
 import com.topnews.android.utils.UIUtils;
@@ -279,6 +280,8 @@ public class NewsDetailActivity extends AppCompatActivity {
      */
     private void mUserKeep(){
 
+        KeepInfo keepInfo=processData(topInfo);
+
         MyUser mUser= BmobUser.getCurrentUser(MyUser.class);
         if (mUser==null){
             Intent intent=new Intent(UIUtils.getContext(),LoginActivity.class);
@@ -286,7 +289,7 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         }else {
             MyUser newUser=new MyUser();
-            newUser.add("keep",topInfo);
+            newUser.add("keep",keepInfo);
             newUser.update(mUser.getObjectId(), new UpdateListener() {
                 @Override
                 public void done(BmobException e) {
@@ -300,5 +303,22 @@ public class NewsDetailActivity extends AppCompatActivity {
             });
         }
 
+    }
+
+    /**
+     * 解析用户收藏信息
+     * @return
+     */
+    private KeepInfo processData(TopInfo topInfo){
+
+        if (topInfo!=null){
+            KeepInfo keepInfo=new KeepInfo();
+            keepInfo.setTitle(topInfo.title);
+            keepInfo.setContentUri(topInfo.ContentUrl);
+            keepInfo.setState(false);
+
+            return keepInfo;
+        }
+        return null;
     }
 }

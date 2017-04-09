@@ -3,6 +3,7 @@ package com.topnews.android.adapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,8 @@ import java.util.List;
 public class UserKeepAdapter extends RecyclerView.Adapter<UserKeepAdapter.ViewHolder>{
 
     private List<KeepInfo> mDatas;
+    private ImageView deleteIcon;
+    private TextView deleteText;
 
     private List<ViewHolder> mHolders=new ArrayList<ViewHolder>();
 
@@ -46,9 +49,11 @@ public class UserKeepAdapter extends RecyclerView.Adapter<UserKeepAdapter.ViewHo
         }
     }
 
-    public UserKeepAdapter(List<KeepInfo> mDatas){
+    public UserKeepAdapter(List<KeepInfo> mDatas,ImageView deleteIcon,TextView deleteText){
 
         this.mDatas=mDatas;
+        this.deleteIcon=deleteIcon;
+        this.deleteText=deleteText;
     }
 
     @Override
@@ -74,6 +79,9 @@ public class UserKeepAdapter extends RecyclerView.Adapter<UserKeepAdapter.ViewHo
                 }else if (curState==ITEM_EDITABLE){
 
                     mDatas.get(position).setState(!mDatas.get(position).isState());
+
+                    refreshDelete();
+
                     notifyItemChanged(position);
                 }
 
@@ -153,6 +161,30 @@ public class UserKeepAdapter extends RecyclerView.Adapter<UserKeepAdapter.ViewHo
             animSet.start();
 
             curState=ITEM_NORMAL;
+        }
+    }
+
+    /**
+     * 刷新删除
+     */
+    private void refreshDelete(){
+
+        int deleteNumber=0;            //记录需要删除的数目    初始值为0
+        for (int i=0;i<mDatas.size();i++){
+
+            if (mDatas.get(i).isState()){
+                deleteNumber++;
+            }
+        }
+
+        if (deleteNumber==0){
+            deleteIcon.setImageResource(R.drawable.keep_delete_nomal);
+            deleteText.setText("删除");
+            deleteText.setTextColor(Color.GRAY);
+        }else {
+            deleteIcon.setImageResource(R.drawable.keep_delete_selected);
+            deleteText.setText("删除"+"("+deleteNumber+")");
+            deleteText.setTextColor(Color.RED);
         }
     }
 

@@ -14,7 +14,7 @@ public class MyUser extends BmobUser implements Serializable{
 
     private String icon;        //我的头像
 
-    private List<TopInfo> keep;       //我的收藏
+    private List<KeepInfo> keep;       //我的收藏
 
     public String getIcon() {
         return icon;
@@ -24,11 +24,11 @@ public class MyUser extends BmobUser implements Serializable{
         this.icon = icon;
     }
 
-    public List<TopInfo> getKeep() {
+    public List<KeepInfo> getKeep() {
         return keep;
     }
 
-    public void setKeep(List<TopInfo> keep) {
+    public void setKeep(List<KeepInfo> keep) {
         this.keep = keep;
     }
 }
