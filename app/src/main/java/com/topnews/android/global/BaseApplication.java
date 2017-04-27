@@ -4,6 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
+
+import org.litepal.LitePalApplication;
+
 import cn.bmob.v3.Bmob;
 
 /**
@@ -12,7 +16,7 @@ import cn.bmob.v3.Bmob;
  * 自定义application
  */
 
-public class BaseApplication extends Application {
+public class BaseApplication extends Application{
 
     private static Context mContext;
 
@@ -30,6 +34,8 @@ public class BaseApplication extends Application {
         mainThreadId=android.os.Process.myTid();      //获取主线程id
 
         Bmob.initialize(this, "c3afc6b5c969611f04beb79125e3ec2f");
+        LitePalApplication.initialize(this);
+        ZXingLibrary.initDisplayOpinion(this);
 
         getSharedPreferences("config",MODE_PRIVATE).edit().putBoolean("night", false).commit();
     }

@@ -284,6 +284,7 @@
             <View style="@style/setting_view"/>
 
             <LinearLayout
+                android:id="@+id/setting_read"
                 style="@style/setting_linear_layout">
 
                 <ImageView
@@ -317,6 +318,7 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
+                        android:id="@+id/setting_scan"
                         style="@style/setting_relative_layout">
                         <ImageView
                             android:id="@+id/ado"
@@ -325,7 +327,7 @@
                         <TextView
                             style="@style/setting_scroll_text_view"
                             android:layout_toRightOf="@id/ado"
-                            android:text="我的消息" />
+                            android:text="扫一扫" />
                         <ImageView
                             style="@style/setting_scroll_image_view"/>
                     </RelativeLayout>

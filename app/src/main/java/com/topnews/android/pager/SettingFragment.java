@@ -25,6 +25,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,13 +41,17 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.topnews.android.R;
 import com.topnews.android.gson.MyUser;
 import com.topnews.android.ui.LoginActivity;
+import com.topnews.android.ui.ReadActivity;
 import com.topnews.android.ui.SignActivity;
 import com.topnews.android.ui.UserKeepActivity;
 import com.topnews.android.utils.UIUtils;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
@@ -55,13 +60,16 @@ import cn.bmob.v3.listener.ProgressCallback;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 import de.hdodenhof.circleimageview.CircleImageView;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 import rx.functions.Action1;
 
 /**
  * Created by dell on 2017/3/23.
  */
 
-public class SettingFragment extends BasePagerFragment{
+public class SettingFragment extends BasePagerFragment implements EasyPermissions.PermissionCallbacks{
 
     private Button settingLogin;
     private LinearLayout headLogin;
@@ -75,12 +83,61 @@ public class SettingFragment extends BasePagerFragment{
     private Button mQuikSign;
     private LinearLayout mKeep;
     private LinearLayout mUserLoginOut;
+    private LinearLayout mLinearRead;
+
+    /**
+     * 扫描跳转Activity RequestCode
+     */
+    public static final int REQUEST_CODE = 111;
+
+    /**
+     * 请求CAMERA权限码
+     */
+    public static final int REQUEST_CAMERA_PERM = 101;
+    private RelativeLayout mScan;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view=View.inflate(UIUtils.getContext(), R.layout.setting_pager,null);
+
+        sp = getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
+
+        initView(view);
+
+        initListener();
+
+        isNight = sp.getBoolean("night", false);
+        if (isNight) {
+            mIsNight.setImageResource(R.drawable.apointe);
+
+        } else {
+            mIsNight.setImageResource(R.drawable.apointd);
+        }
+
+        //获取本地用户 优化用户体验
+        MyUser curUser=BmobUser.getCurrentUser(MyUser.class);
+        if (curUser==null){
+
+            headLogin.setVisibility(View.VISIBLE);
+            mUserInfo.setVisibility(View.GONE);
+
+        }else {
+
+            headLogin.setVisibility(View.GONE);
+            mUserInfo.setVisibility(View.VISIBLE);
+
+            //获取本地用户信息
+            mName.setText(curUser.getUsername());
+            Glide.with(this).load(curUser.getIcon()).error(R.drawable.adf)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mIcon);
+        }
+
+        return view;
+    }
+
+    private void initView(View view){
         settingLogin = (Button) view.findViewById(R.id.btn_setting_login);
         headLogin = (LinearLayout) view.findViewById(R.id.head_login);
         mUserInfo = (RelativeLayout) view.findViewById(R.id.head_user_info);
@@ -91,8 +148,11 @@ public class SettingFragment extends BasePagerFragment{
         mQuikSign = (Button) view.findViewById(R.id.btn_quik_sign);
         mKeep = (LinearLayout) view.findViewById(R.id.setting_my_keep);
         mUserLoginOut = (LinearLayout) view.findViewById(R.id.setting_login_out);
+        mLinearRead = (LinearLayout) view.findViewById(R.id.setting_read);
+        mScan = (RelativeLayout) view.findViewById(R.id.setting_scan);
+    }
 
-        sp = getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
+    private void initListener(){
 
         settingLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,14 +198,6 @@ public class SettingFragment extends BasePagerFragment{
             }
         });
 
-        isNight = sp.getBoolean("night", false);
-        if (isNight) {
-            mIsNight.setImageResource(R.drawable.apointe);
-
-        } else {
-            mIsNight.setImageResource(R.drawable.apointd);
-        }
-
         mChangeSkin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,24 +208,6 @@ public class SettingFragment extends BasePagerFragment{
             }
         });
 
-        //获取本地用户 优化用户体验
-        MyUser curUser=BmobUser.getCurrentUser(MyUser.class);
-        if (curUser==null){
-
-            headLogin.setVisibility(View.VISIBLE);
-            mUserInfo.setVisibility(View.GONE);
-
-        }else {
-
-            headLogin.setVisibility(View.GONE);
-            mUserInfo.setVisibility(View.VISIBLE);
-
-            //获取本地用户信息
-            mName.setText(curUser.getUsername());
-            Glide.with(this).load(curUser.getIcon()).error(R.drawable.adf)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(mIcon);
-        }
-
         mKeep.setOnClickListener(new View.OnClickListener() {
             private Intent intent;
 
@@ -183,9 +217,9 @@ public class SettingFragment extends BasePagerFragment{
                 MyUser mUser=BmobUser.getCurrentUser(MyUser.class);
 
                 if (mUser==null){
-                     intent= new Intent(UIUtils.getContext(),LoginActivity.class);
+                    intent= new Intent(UIUtils.getContext(),LoginActivity.class);
                 }else {
-                     intent=new Intent(UIUtils.getContext(), UserKeepActivity.class);
+                    intent=new Intent(UIUtils.getContext(), UserKeepActivity.class);
                 }
                 startActivity(intent);
             }
@@ -208,7 +242,16 @@ public class SettingFragment extends BasePagerFragment{
             }
         });
 
-        return view;
+        mLinearRead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(UIUtils.getContext(), ReadActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mScan.setOnClickListener(new ButtonOnClickListener(mScan.getId()));
     }
 
     @Override
@@ -253,6 +296,45 @@ public class SettingFragment extends BasePagerFragment{
                     }
                 }
                 break;
+
+            /**
+             * 处理二维码扫描结果
+             */
+            case REQUEST_CODE:
+
+                //处理扫描结果（在界面上显示）
+                if (null != data) {
+                    Bundle bundle = data.getExtras();
+                    if (bundle == null) {
+                        return;
+                    }
+                    if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                        String result = bundle.getString(CodeUtils.RESULT_STRING);
+                        //Toast.makeText(this, "解析结果:" + result, Toast.LENGTH_LONG).show();
+
+                        if (Patterns.WEB_URL.matcher(result).matches()) {
+                            //符合标准
+                            Intent intent = new Intent();
+                            intent.setAction("android.intent.action.VIEW");
+                            Uri content_url = Uri.parse(result);
+                            intent.setData(content_url);
+                            startActivity(intent);
+
+                        } else{
+                            //不符合标准
+                            Toast.makeText(UIUtils.getContext(), "解析结果:" + result, Toast.LENGTH_LONG).show();
+                        }
+
+                    } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                        Toast.makeText(UIUtils.getContext(), "解析二维码失败", Toast.LENGTH_LONG).show();
+                    }
+            }
+            break;
+
+            case REQUEST_CAMERA_PERM:
+                Toast.makeText(UIUtils.getContext(), "从设置页面返回...", Toast.LENGTH_SHORT)
+                        .show();
+            break;
 
             default:
                 break;
@@ -317,6 +399,11 @@ public class SettingFragment extends BasePagerFragment{
             default:
                 break;
         }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     /**
@@ -446,6 +533,71 @@ public class SettingFragment extends BasePagerFragment{
             sp.edit().putBoolean("night", true).commit();
         }
 
+    }
+
+    @AfterPermissionGranted(REQUEST_CAMERA_PERM)
+    public void cameraTask(int viewId) {
+        if (EasyPermissions.hasPermissions(UIUtils.getContext(), Manifest.permission.CAMERA)) {
+            // Have permission, do the thing!
+            onClick(viewId);
+        } else {
+            // Ask for one permission
+            EasyPermissions.requestPermissions(this, "需要请求camera权限",
+                    REQUEST_CAMERA_PERM, Manifest.permission.CAMERA);
+        }
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        Toast.makeText(UIUtils.getContext(), "执行onPermissionsGranted()...", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        Toast.makeText(UIUtils.getContext(), "执行onPermissionsDenied()...", Toast.LENGTH_SHORT).show();
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this, "当前App需要申请camera权限,需要打开设置页面么?")
+                    .setTitle("权限申请")
+                    .setPositiveButton("确认")
+                    .setNegativeButton("取消", null /* click listener */)
+                    .setRequestCode(REQUEST_CAMERA_PERM)
+                    .build()
+                    .show();
+        }
+    }
+
+    /**
+     * 按钮点击监听
+     */
+    class ButtonOnClickListener implements View.OnClickListener{
+
+        private int buttonId;
+
+        public ButtonOnClickListener(int buttonId) {
+            this.buttonId = buttonId;
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            cameraTask(buttonId);
+        }
+    }
+
+    /**
+     * 按钮点击事件处理逻辑
+     * @param buttonId
+     */
+    private void onClick(int buttonId) {
+        switch (buttonId) {
+            case R.id.setting_scan:
+                Intent intent = new Intent(UIUtils.getContext(), CaptureActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+                break;
+
+            default:
+                break;
+        }
     }
 
     /**

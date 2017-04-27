@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.topnews.android.R;
+import com.topnews.android.gson.ReadInfo;
 import com.topnews.android.gson.TopInfo;
 import com.topnews.android.ui.NewsDetailActivity;
 import com.topnews.android.utils.SharPreUtil;
@@ -22,7 +23,9 @@ import com.topnews.android.utils.UIUtils;
 
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -96,6 +99,17 @@ public class TopFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     itemViewHolder.tv_title.setTextColor(Color.GRAY);
 
                     //Toast.makeText(v.getContext(),"你点击了第"+position+"条数据",Toast.LENGTH_SHORT).show();
+
+                    SimpleDateFormat formatter =new SimpleDateFormat("yyyyMMdd");
+                    Date curDate=new Date(System.currentTimeMillis());//获取当前时间
+                    String date=formatter.format(curDate);
+
+                    //保存阅读记录
+                    ReadInfo mInfo=new ReadInfo();
+                    mInfo.setDate(date);
+                    mInfo.setTitle(mDatas.get(position-1).title);
+                    mInfo.setContentUri(mDatas.get(position-1).ContentUrl);
+                    mInfo.save();
 
                     Intent intent=new Intent(UIUtils.getContext(), NewsDetailActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

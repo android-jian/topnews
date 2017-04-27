@@ -18,6 +18,14 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".global.BaseApplication"
         android:allowBackup="true"
@@ -85,10 +93,14 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ui.UserKeepActivity" android:label="我的收藏"/>
-        <activity android:name=".ui.SignActivity" android:label="用户注册"/>
-        <activity android:name=".ui.KeepDetailActivity"/>
-
+        <activity
+            android:name=".ui.UserKeepActivity"
+            android:label="我的收藏" />
+        <activity
+            android:name=".ui.SignActivity"
+            android:label="用户注册" />
+        <activity android:name=".ui.KeepDetailActivity" />
+        <activity android:name=".ui.ReadActivity"></activity>
     </application>
 
 </manifest>
