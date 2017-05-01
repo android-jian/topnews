@@ -37,7 +37,7 @@
         <RadioButton
             android:id="@+id/btn_talking"
             style="@style/Bottom_Tab_Style"
-            android:text="直播"
+            android:text="美女"
             android:drawableTop="@drawable/tab_talking"/>
 
         <RadioButton
