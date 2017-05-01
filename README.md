@@ -53,8 +53,13 @@
   
    <img src="https://github.com/android-jian/helloworld/blob/master/images/scan.png" width="250"/>
   
-  夜间模式：   <img src="https://github.com/android-jian/helloworld/blob/master/images/night.png" width="250"/>
   
+  
+  夜间模式：
+  
+   <img src="https://github.com/android-jian/helloworld/blob/master/images/scan.png" width="250"/>
+  
+    
  
 
 新闻详情界面：
